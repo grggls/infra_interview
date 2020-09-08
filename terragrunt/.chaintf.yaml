@@ -1,0 +1,8 @@
+defaultCredentials:
+  provider: aws-vault
+  awsVault:
+    profile: chainlink-interview
+    region: us-west-2
+defaultVersions:
+  terraform: 0.12.29
+  terragrunt: 0.23.40
