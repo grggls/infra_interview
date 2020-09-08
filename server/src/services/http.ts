@@ -1,6 +1,7 @@
 import * as cors from "cors";
 import * as express from "express";
 import { Server } from "http";
+import * as randomName from "node-random-name";
 import { Tedis } from "tedis";
 import { Connection } from "typeorm";
 import { User } from "../entity/User";
@@ -26,9 +27,9 @@ export function server(
 
   app.post("/makeUser", async (_, res) => {
     const user = new User();
-    user.firstName = "Timber";
-    user.lastName = "Saw";
-    user.age = 25;
+    user.firstName = randomName({ first: true });
+    user.lastName = randomName({ last: true });
+    user.age = Math.floor(Math.random() * 100 + 1);
     await db.manager.save(user);
     const users = await db.manager.find(User);
     res.json(users);
