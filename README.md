@@ -20,6 +20,8 @@ The system components are as follows:
 
 The 4 above services need to communicate to each other, and be orchestrated via docker-compose. A template docker-compose file has been provided `./docker-compose-template.yml`.
 
+![](./component-diagram.png)
+
 # Bonuses
 
 - How would you make the client and server services hot-reloadable?
