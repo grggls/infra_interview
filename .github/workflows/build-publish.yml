@@ -15,25 +15,19 @@ jobs:
         with:
           version: latest
 
-      - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v1
+      - name: Login to ECR
+        uses: docker/login-action@v1
         with:
-          aws-access-key-id: "${{ secrets.AWS_ACCESS_KEY_ID }}"
-          aws-secret-access-key: "${{ secrets.AWS_ACCESS_KEY }}"
-          aws-region: "${{ secrets.AWS_REGION }}"
-          role-to-assume: "${{ secrets.AWS_ROLE_TO_ASSUME }}"
-          role-duration-seconds: 1200
-          role-session-name: "temp-session"
-          role-skip-session-tagging: true
-
-      - name: Docker login to ECR
-        uses: aws-actions/amazon-ecr-login@v1
+          registry: ${{ secrets.AWS_ECR_URL }}
+          username: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          password: ${{ secrets.AWS_ACCESS_KEY }}
 
       - name: Build and push
         id: docker_build
         uses: docker/build-push-action@v2
         with:
           context: ./server
+          file: ./server/Dockerfile
           push: true
-          tags: infratestserver:latest
+          tags: ${{ secrets.AWS_ECR_URL }}:latest
           secrets: GIT_AUTH_TOKEN=${{ github.token }}
