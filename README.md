@@ -15,8 +15,10 @@ The system components are as follows:
 3. Redis -- A redis service that operates as a cache for the server
    - does not have any persistence requirements
    - needs to be configured via the provided `./redis/redis.conf` file as a bind-mount
+   - COPY
 4. Postgresql -- A postgresql service that operates as a persistence layer for the server
    - needs persistence across service interuptions such as restarts.
+   - give it a volume
 
 The 4 above services need to communicate to each other, and be orchestrated via docker-compose. A template docker-compose file has been provided `./docker-compose-template.yml`.
 
@@ -26,5 +28,9 @@ The 4 above services need to communicate to each other, and be orchestrated via 
 
 - How would you make the client and server services hot-reloadable?
 - How would you make final image size smaller?
+  - multi-stage builds
+  - base image choice
 - What steps should be taken to make subsequent builds faster?
+  - cache layers locally
 - What could you do you have greater network isolation between services?
+  - multiple networks
