@@ -27,6 +27,7 @@ The 4 above services need to communicate to each other, and be orchestrated via 
 # Bonuses
 
 - How would you make the client and server services hot-reloadable?
+  - restart: always
 - How would you make final image size smaller?
   - multi-stage builds
   - base image choice

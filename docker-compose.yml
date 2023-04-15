@@ -3,14 +3,29 @@ version: "3.8"
 services:
 #  client:
 #    image: infratestclient
-#  server:
-#    image: infratestserver
+  server:
+    image: infratestserver
+    build: ./server
+    depends_on:
+      - db
+      - redis
+    environment:
+      TYPEORM_HOST: db
+      TYPEORM_USERNAME: pguser
+      TYPEORM_PASSWORD: pgpass
+      TYPEORM_DATABASE: pgdb
+      TYPEORM_PORT: 5432
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+      REDIS_PASSWORD:
+      PORT: 3030
   db:
     image: postgres:12
     restart: always
     environment:
-      POSTGRES_USER: myusername
-      POSTGRES_PASSWORD: mypassword
+      POSTGRES_USER: pguser
+      POSTGRES_PASSWORD: pgpass
+      POSTGRES_DB: pgdb
     volumes:
       - db-data:/var/lib/postgresql/data
     ports:
