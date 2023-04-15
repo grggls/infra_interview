@@ -1,8 +1,16 @@
 version: "3.8"
 
 services:
-#  client:
-#    image: infratestclient
+  client:
+    image: infratestclient
+    restart: always
+    build: ./client
+    depends_on:
+      - server
+    environment:
+      REACT_APP_BACKEND_URL: "http://localhost:3030"
+    ports:
+      - "3000:3000"
   server:
     image: infratestserver
     build: ./server
@@ -19,6 +27,8 @@ services:
       REDIS_PORT: 6379
       REDIS_PASSWORD:
       PORT: 3030
+    ports:
+      - "3030:3030"
   db:
     image: postgres:12
     restart: always
